@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: demoproject
-        image: k2r2t2/demoproject
+        image: k2r2t2/demoproject2
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
