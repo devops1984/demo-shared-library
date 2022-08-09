@@ -2,7 +2,7 @@ pipeline {
     agent any
 	environment {
 	    PATH = "$PATH:/usr/share/maven/bin"
-	    imagename = "k2r2t2/demoproject"
+	    imagename = "k2r2t2/demoproject2"
 	    dockerImage = ""	
 	}
 	 stages {
@@ -60,38 +60,8 @@ pipeline {
 			    }   
                        }
                 }
-		stage ('Deployment') {
-			steps{
-				script{
-				    kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
-                          }
-		}	
-	}
-		/*stage ('transfer yml file') {
-			steps{
-			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'jenkins', 
-				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'rsync -avh  /var/lib/jenkins/workspace/test1/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "Dockerfile" --exclude "webapp" --exclude "README.md" --exclude "server"  deploy@172.31.12.188:/home/deploy/demoproject', 
-					  execTimeout: 120000, flatten: false, 
-					  makeEmptyDirs: false, noDefaultExcludes: false, 
-					  patternSeparator: '[, ]+', remoteDirectory: '', 
-					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
-					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-                          }
-		 }	
-		stage ('Deployment') {
-			steps{
-			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'deploy', 
-				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'kubectl apply -f /home/deploy/demoproject/deployment.yml', 
-					  execTimeout: 120000, flatten: false, 
-					  makeEmptyDirs: false, noDefaultExcludes: false, 
-					  patternSeparator: '[, ]+', remoteDirectory: '', 
-					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
-					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-                          }
-		 }*/	 
-          } 
+		stage("kubernetes deployment"){
+                        sh 'kubectl apply -f deployment.yml'
+             }
+       } 
  }
