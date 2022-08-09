@@ -11,18 +11,17 @@ pipeline {
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
 		}
-		/* stage('Sonar Analysis') {
+		stage('Sonar Analysis') {
                      steps {
                       withSonarQubeEnv('Sonarqube') {
                                sh " mvn sonar:sonar \
-			       -DSonar.projectKey=demoproject  \
 			       -Dsonar.host.url=http://54.183.145.72:9000 \
-			       -Dsonar.login=sqa_89d8d3702cc95b24efc28fdcff0c8494fa83fbd2"
+			       -Dsonar.login=sqa_3c21c782f53425c2ca8158be94c88b0c642c4622"
 			         
                              }
                      }
-               }*/
-		stage('Upload War to Nexus'){
+               }
+		/*stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
 				     [
@@ -40,7 +39,7 @@ pipeline {
 				     repository: 'demo-app', 
 				     version: '1.0.${BUILD_NUMBER}'
 			}
-		}
+		}*/
 		stage('Build Image') {                               	
                     steps {
 			    script {
