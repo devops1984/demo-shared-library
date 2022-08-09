@@ -62,7 +62,9 @@ pipeline {
                 }
 		stage("kubernetes deployment"){
 		  steps {
-                        sh 'kubectl apply -f deployment.yml'
+                        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '']]) {
+                                   sh "kubectl apply -f deployment.yml"
+                            }
 		  }
              }
        } 
