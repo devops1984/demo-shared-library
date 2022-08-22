@@ -11,35 +11,6 @@ pipeline {
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
 		}
-		/*stage('Sonar Analysis') {
-                     steps {
-                      withSonarQubeEnv('Sonarqube') {
-                               sh " mvn sonar:sonar \
-			       -Dsonar.host.url=http://54.183.145.72:9000 \
-			       -Dsonar.login=sqa_3c21c782f53425c2ca8158be94c88b0c642c4622"
-			         
-                             }
-                     }
-               }*/
-		/*stage('Upload War to Nexus'){
-		    steps{
-			     nexusArtifactUploader artifacts: [
-				     [
-					     artifactId: 'webapp', 
-					     classifier: '', 
-					     file: 'webapp/target/webapp.war', 
-					     type: 'war'
-				     ]
-			     ], 
-				     credentialsId: 'NEXUS3', 
-				     groupId: 'com.example.demo-project', 
-				     nexusUrl: '51.124.248.36:8081', 
-				     nexusVersion: 'nexus3', 
-				     protocol: 'http', 
-				     repository: 'demo-app', 
-				     version: '1.0.${BUILD_NUMBER}'
-			}
-		}*/
 		stage('Build Image') {                               	
                     steps {
 			    script {
