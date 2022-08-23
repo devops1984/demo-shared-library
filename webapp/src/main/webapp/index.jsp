@@ -1,3 +1,2 @@
-Hello, 
-This is a Sample Project without ansible
+This is a Sample Project using Shared library.
 
