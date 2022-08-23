@@ -5,7 +5,18 @@ pipeline {
 	environment {
              HOME  = "${WORKSPACE}"
              }
+	
+	
 	 stages {
+		stage ('cleanWs & checkout scm') {
+                  steps {
+                     script {
+                        deleteDir()
+                        cleanWs()
+                        checkout scm
+                            }
+                         }
+                 }
                 stage('Maven Build'){
 		    steps{
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
@@ -27,6 +38,7 @@ pipeline {
                                }
                            }
                 }
+	       
 		stage("kubernetes deployment"){
 		  steps {
                         withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '']]) {
@@ -36,4 +48,11 @@ pipeline {
 		  }
              }
        } 
- }
+      post { 
+          always {
+            script {
+                cleanWs()
+                 }
+              }
+         }
+}
