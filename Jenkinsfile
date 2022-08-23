@@ -1,34 +1,31 @@
+@Library('docker-shared-lib')_
+
 pipeline {
     agent any
 	environment {
-	    PATH = "$PATH:/usr/share/maven/bin"
-	    imagename = "k2r2t2/demoproject2"
-	    dockerImage = ""	
-	}
+             HOME  = "${WORKSPACE}"
+             }
 	 stages {
                 stage('Maven Build'){
 		    steps{
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
 		}
-		stage('Build Image') {                               	
-                    steps {
-			    script {
-				 dockerImage = docker.build imagename
-			    }
-                       }
+		stage('Container build') {
+                   when {
+                      allOf {
+                             expression { dockerfiles }
+                             branch "main"
+                     }
                 }
-		stage('Push Image') {   
-			environment {
-				registryCredential = 'dockerhub'
-			}
-                    steps {
-			    script {
-				    docker.withRegistry( 'https://registry.hub.docker.com' , registryCredential ){
-					    dockerImage.push("latest")
-				    }
-			    }   
-                       }
+                   steps {
+                      script {
+                         dockerBuild.login()
+                         dockerBuild.build(env.DOCKER_TAG)
+                         dockerBuild.push(env.DOCKER_TAG)
+                                      }
+                               }
+                           }
                 }
 		stage("kubernetes deployment"){
 		  steps {
