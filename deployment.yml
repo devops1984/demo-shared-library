@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoproject-deployment
+  name: demosharedlib-deployment
 spec:
   selector:
     matchLabels:
-      app: demoproject
+      app: demosharedlib
   replicas: 2
   revisionHistoryLimit: 0
   strategy:
@@ -17,11 +17,11 @@ spec:
   template:
     metadata:
       labels:
-        app: demoproject
+        app: demosharedlib
     spec:
       containers:
-      - name: demoproject
-        image: k2r2t2/demoproject2
+      - name: demosharedlib
+        image: k2r2t2/demosharedlib
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -33,12 +33,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: demoproject-service
+  name: demosharedlib-service
   labels:
-    app: demoproject
+    app: demosharedlib
 spec:
   selector:
-    app: demoproject
+    app: demosharedlib
   type: LoadBalancer
   ports:
     - port: 8080
