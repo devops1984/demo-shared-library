@@ -34,6 +34,7 @@ pipeline {
                          dockerBuild.login()
                          dockerBuild.build(env.DOCKER_TAG)
                          dockerBuild.push(env.DOCKER_TAG)
+			 dockerBuild.deploy()
                                       }
                                }
                            }
