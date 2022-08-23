@@ -23,12 +23,6 @@ pipeline {
 			}
 		}
 		stage('Container build') {
-                   when {
-                      allOf {
-                             expression { dockerfiles }
-                             branch "main"
-                     }
-                }
                    steps {
                       script {
                          dockerBuild.login()
