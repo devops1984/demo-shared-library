@@ -17,14 +17,15 @@ pipeline {
                             }
                          }
                  }
-                stage('Maven Build'){
+                /*stage('Maven Build'){
 		    steps{
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
-		}
+		}*/
 		stage('Container build') {
                    steps {
                       script {
+			 dockerBuild.mavenbuild()
                          dockerBuild.login()
                          dockerBuild.build(env.DOCKER_TAG)
                          dockerBuild.push(env.DOCKER_TAG)
