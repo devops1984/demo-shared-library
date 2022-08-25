@@ -2,13 +2,13 @@
 
 pipeline {
     agent any
-	environment {
+	/*environment {
              HOME  = "${WORKSPACE}"
-             }
+             }*/
 	
 	
 	 stages {
-		stage ('cleanWs & checkout scm') {
+		/*stage ('cleanWs & checkout scm') {
                   steps {
                      script {
                         deleteDir()
@@ -17,7 +17,7 @@ pipeline {
                             }
                          }
                  }
-                /*stage('Maven Build'){
+                stage('Maven Build'){
 		    steps{
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
