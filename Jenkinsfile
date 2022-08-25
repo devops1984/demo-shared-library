@@ -25,11 +25,11 @@ pipeline {
 		stage('Container build') {
                    steps {
                       script {
-			 dockerBuild.mavenbuild()
-                         dockerBuild.login()
-                         dockerBuild.build(env.DOCKER_TAG)
-                         dockerBuild.push(env.DOCKER_TAG)
-			 dockerBuild.deploy()
+			 build.mavenbuild()
+                         build.login()
+                         build.buildimage(env.DOCKER_TAG)
+                         build.pushimage(env.DOCKER_TAG)
+			 build.deploy()
                                       }
                                }
                            }
